@@ -5,9 +5,9 @@ function letsgo_theme_scripts() {
     // ---- СТИЛИ ----
     wp_enqueue_style(
         'letsgo-main-style',
-        get_template_directory_uri() . '/assets/css/main.css',
+        get_template_directory_uri() . '/assets/css/style.css',
         array(),
-        filemtime(get_template_directory() . '/assets/css/main.css')
+        filemtime(get_template_directory() . '/assets/css/style.css')
     );
 
     // ---- VENDOR JS ----

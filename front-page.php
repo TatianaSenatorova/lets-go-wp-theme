@@ -1,15 +1,15 @@
 <?php
-/* 
- * Template Name: Главная страница
- */
 get_header();
 ?>
 
-<main class="site-main">
+<?php get_template_part( 'template-parts/sections/hero-main' ); ?>
+<?php get_template_part( 'template-parts/sections/about' ); ?>
+<?php get_template_part( 'template-parts/sections/directions' ); ?>
+<?php get_template_part( 'template-parts/sections/companions' ); ?>
+<?php get_template_part( 'template-parts/sections/tariffs' ); ?>
+<?php get_template_part( 'template-parts/sections/registration' ); ?>
+<?php get_template_part( 'template-parts/sections/map' ); ?>
 
-    <!-- Здесь будет твоя верстка главной страницы -->
-    <!-- Мы вставим её позже из build/index.html -->
-
-</main>
-
-<?php get_footer(); ?>
+<?php
+get_footer();
+?>

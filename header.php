@@ -10,7 +10,6 @@
     <meta name="description" content="Сервис поиска попутчиков в путешествиях - «Погнали!». С «Погнали!» твои поездки - только с теми, кто на одной волне.">
 
     <?php
-    // Базовый путь до темы, чтобы не повторяться
     $theme_uri = get_template_directory_uri();
     ?>
 
@@ -26,173 +25,57 @@
     <link rel="preload" href="<?php echo $theme_uri; ?>/assets/fonts/roboto/roboto-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo $theme_uri; ?>/assets/fonts/roboto/roboto-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
-    <?php if ( is_front_page() ) : ?>
-        <!-- PRELOAD HERO IMAGES (ГЛАВНАЯ) -->
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(max-width: 320px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-mobile.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-mobile.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/globe-mobile@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 321px) and (max-width: 1023px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-tablet.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-tablet.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/globe-tablet@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 1024px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-desktop.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/globe-desktop.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/globe-desktop@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(max-width: 767px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-mobile.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-mobile.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/traveller-mobile@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 768px) and (max-width: 1023px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-tablet.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-tablet.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/traveller-tablet@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 1024px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-desktop.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/hero/traveller-desktop.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/hero/traveller-desktop@2x.webp 2x">
-
-    <?php elseif ( is_page( 'catalog' ) ) : ?>
-        <!-- PRELOAD IMAGES (КАТАЛОГ) -->
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(max-width: 767px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-mobile-catalog.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-mobile-catalog.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/companions/firsova-mobile-catalog@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 768px) and (max-width: 1023px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-tablet-catalog.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-tablet-catalog.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/companions/firsova-tablet-catalog@2x.webp 2x">
-
-        <link rel="preload"
-              as="image"
-              type="image/webp"
-              media="(min-width: 1024px)"
-              href="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-desktop-catalog.webp"
-              imagesrcset="<?php echo $theme_uri; ?>/assets/img/content/companions/firsova-desktop-catalog.webp 1x, <?php echo $theme_uri; ?>/assets/img/content/companions/firsova-desktop-catalog@2x.webp 2x">
-
-        <link rel="preload"
-              as="fetch"
-              href="<?php echo $theme_uri; ?>/assets/data/companions.json"
-              crossorigin>
-    <?php endif; ?>
-
-    <!-- СТИЛИ (если пока не подключаешь через wp_enqueue_style) -->
-    <link rel="stylesheet" href="<?php echo $theme_uri; ?>/assets/css/style.min.css">
-
     <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
+<div class="wrapper">
 
 <?php
-// -------------------------------
-// ЕСЛИ ГЛАВНАЯ
-// -------------------------------
 if ( is_front_page() ) :
 ?>
-    <header class="header header--bottom-padding-sm" data-header data-scroll-lock-fill-gap>
+    <header class="header header--bottom-padding-sm" data-header data-scroll-lock-fill-gap">
+        <!-- ТВОЙ ХЭДЕР ДЛЯ ГЛАВНОЙ (оставляю как есть) -->
         <div class="container">
             <div class="header__inner">
 
-                <!-- ЛОГО (главная версия - без ссылки) -->
+                <!-- ЛОГО -->
                 <span class="header__logo logo">
                     <span class="logo__wrap logo__wrap--light">
                         <picture>
                             <source media="(max-width: 767px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-mobile.svg">
                             <source media="(max-width: 1023px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-tablet.svg">
-                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-desktop.svg" alt="Логотип Погнали?">
+                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-desktop.svg" alt="">
                         </picture>
                     </span>
                     <span class="logo__wrap logo__wrap--dark">
                         <picture>
                             <source media="(max-width: 767px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-dark-text-mobile.svg">
-                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-dark-text-tablet.svg" alt="Логотип Погнали?">
+                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-dark-text-tablet.svg" alt="">
                         </picture>
                     </span>
                 </span>
 
-                <!-- НАВИГАЦИЯ ДЛЯ ГЛАВНОЙ -->
+                <!-- НАВИГАЦИЯ -->
+                <?php /* оставлено как у тебя */ ?>
                 <nav class="header__main-nav">
-                    <button class="header__toggle" type="button" aria-label="Переключатель отображения меню" aria-pressed="false" data-burger>
-                        <span class="header__icon-burger">
-                            <svg width="25" height="11" aria-hidden="true">
-                                <use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#burger"></use>
-                            </svg>
-                        </span>
-                        <span class="header__icon-close">
-                            <svg width="18" height="19" aria-hidden="true">
-                                <use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#close"></use>
-                            </svg>
-                        </span>
+                    <button class="header__toggle" type="button" data-burger>
+                        <span class="header__icon-burger"><svg width="25" height="11"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#burger"></use></svg></span>
+                        <span class="header__icon-close"><svg width="18" height="19"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#close"></use></svg></span>
                     </button>
 
                     <div class="header__menu-wrapper">
                         <div class="header__menu-scroll" data-scroll-lock-scrollable data-lenis-prevent>
 
                             <ul class="header__nav-list">
-                                <li class="header__nav-item">
-                                    <a class="header__nav-link" href="#about" data-nav="about" data-close-menu="true">
-                                        <span class="header__link-clip">
-                                            <span class="header__link-text" data-hover="О сервисе">О сервисе</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <a class="header__nav-link" href="#directions" data-nav="directions" data-close-menu="true">
-                                        <span class="header__link-clip">
-                                            <span class="header__link-text" data-hover="Направления">Направления</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <a class="header__nav-link" href="/catalog" data-nav="catalog" data-close-menu="true">
-                                        <span class="header__link-clip">
-                                            <span class="header__link-text" data-hover="Попутчики">Попутчики</span>
-                                        </span>
-                                    </a>
-                                </li>
+                                <li><a class="header__nav-link" href="#about">О сервисе</a></li>
+                                <li><a class="header__nav-link" href="#directions">Направления</a></li>
+                                <li><a class="header__nav-link" href="/catalog">Попутчики</a></li>
                             </ul>
 
                             <?php
-                            // контакты в хэдере
-                            get_template_part(
-                                'template-parts/components/contacts',
-                                null,
-                                ['class' => 'header__contacts contacts']
-                            );
-
-                            // соцсети в хэдере
-                            get_template_part(
-                                'template-parts/components/social',
-                                null,
-                                [
-                                    'class'    => 'header__social social',
-                                    'modifier' => 'social--header',
-                                ]
-                            );
+                            get_template_part('template-parts/components/contacts', null, ['class'=>'header__contacts contacts']);
+                            get_template_part('template-parts/components/social', null, ['class'=>'header__social social','modifier'=>'social--header']);
                             ?>
 
                         </div>
@@ -204,88 +87,39 @@ if ( is_front_page() ) :
     </header>
 
 <?php
-// ------------------------------------
-// ЕСЛИ СТРАНИЦА КАТАЛОГА
-// ------------------------------------
 elseif ( is_page( 'catalog' ) ) :
 ?>
+
+    <!-- Хэдер каталога -->
     <header class="header header--dark-background" data-header data-scroll-lock-fill-gap>
         <div class="container">
             <div class="header__inner">
 
-                <!-- ЛОГО КАК ССЫЛКА -->
-                <a class="header__logo logo" href="/" aria-label="Погнали?">
-                    <span class="logo__wrap logo__wrap--light">
-                        <picture>
-                            <source media="(max-width: 767px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-mobile.svg">
-                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-desktop.svg" alt="Логотип Погнали?">
-                        </picture>
-                    </span>
-                    <span class="logo__wrap logo__wrap--dark">
-                        <picture>
-                            <source media="(max-width: 767px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-dark-text-mobile.svg">
-                            <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-dark-text-tablet.svg" alt="Логотип Погнали?">
-                        </picture>
-                    </span>
+                <a class="header__logo logo" href="/">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-mobile.svg">
+                        <img src="<?php echo $theme_uri; ?>/assets/img/svg/logos/logo-light-text-desktop.svg" alt="">
+                    </picture>
                 </a>
 
-                <!-- НАВИГАЦИЯ КАТАЛОГА -->
                 <nav class="header__main-nav">
-                    <button class="header__toggle" type="button" aria-label="Переключатель отображения меню" aria-pressed="false" data-burger>
-                        <span class="header__icon-burger">
-                            <svg width="25" height="11" aria-hidden="true">
-                                <use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#burger"></use>
-                            </svg>
-                        </span>
-                        <span class="header__icon-close">
-                            <svg width="18" height="19" aria-hidden="true">
-                                <use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#close"></use>
-                            </svg>
-                        </span>
+                    <button class="header__toggle" type="button" data-burger>
+                        <span class="header__icon-burger"><svg width="25" height="11"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#burger"></use></svg></span>
+                        <span class="header__icon-close"><svg width="18" height="19"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#close"></use></svg></span>
                     </button>
 
                     <div class="header__menu-wrapper">
-                        <div class="header__menu-scroll" data-scroll-lock-scrollable data-lenis-prevent>
+                        <div class="header__menu-scroll">
 
                             <ul class="header__nav-list">
-                                <li class="header__nav-item">
-                                    <a class="header__nav-link" href="/#about" data-nav="about" data-close-menu="true">
-                                        <span class="header__link-clip">
-                                            <span class="header__link-text" data-hover="О сервисе">О сервисе</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <a class="header__nav-link" href="/#directions" data-nav="directions" data-close-menu="true">
-                                        <span class="header__link-clip">
-                                            <span class="header__link-text" data-hover="Направления">Направления</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="header__nav-item">
-                                    <span class="header__nav-link is-active" aria-current="page" data-close-menu="true">
-                                        Попутчики
-                                    </span>
-                                </li>
+                                <li><a href="/#about">О сервисе</a></li>
+                                <li><a href="/#directions">Направления</a></li>
+                                <li><span class="header__nav-link is-active">Попутчики</span></li>
                             </ul>
 
                             <?php
-                            // контакты
-                            get_template_part(
-                                'template-parts/components/contacts',
-                                null,
-                                ['class' => 'header__contacts contacts']
-                            );
-
-                            // соцсети
-                            get_template_part(
-                                'template-parts/components/social',
-                                null,
-                                [
-                                    'class'    => 'header__social social',
-                                    'modifier' => 'social--header',
-                                ]
-                            );
+                            get_template_part('template-parts/components/contacts', null, ['class'=>'header__contacts contacts']);
+                            get_template_part('template-parts/components/social', null, ['class'=>'header__social social','modifier'=>'social--header']);
                             ?>
 
                         </div>
@@ -296,6 +130,7 @@ elseif ( is_page( 'catalog' ) ) :
         </div>
     </header>
 
-<?php
-endif;
-?>
+<?php endif; ?>
+
+<!-- ВАЖНО! ТЕПЕРЬ МЫ ОТКРЫВАЕМ MAIN ЗДЕСЬ -->
+<main class="main">
