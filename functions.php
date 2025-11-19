@@ -43,8 +43,9 @@ function letsgo_theme_scripts() {
 add_action( 'wp_enqueue_scripts', 'letsgo_theme_scripts' );
 
 
+
 /**
- * Регистрация кастомного пост-типа Направления
+ * Регистрация кастомного пост-типа «Направления»
  */
 function register_directions_cpt() {
 
@@ -55,10 +56,30 @@ function register_directions_cpt() {
         ],
         'public'                => true,
         'publicly_queryable'    => true,
-        'has_archive'           => true,
+        'has_archive'           => false,
         'menu_icon'             => 'dashicons-location-alt',
-        'supports'              => [ 'title', 'editor', 'thumbnail' ],
+        'supports'              => [ 'title' ],
         'rewrite'               => [ 'slug' => 'directions' ],
-    ]);
+        'show_in_rest'          => false, // нам REST не нужен
+    ] );
 }
 add_action( 'init', 'register_directions_cpt' );
+
+
+
+/**
+ * Размеры изображений для секции Дирекшнс (для <picture>)
+ */
+function letsgo_register_image_sizes() {
+
+    // mobile — 270×111
+    add_image_size( 'dir_mobile', 270, 111, true );
+
+    // tablet — 186×140
+    add_image_size( 'dir_tablet', 186, 140, true );
+
+    // desktop — 203×140
+    add_image_size( 'dir_desktop', 203, 140, true );
+}
+add_action( 'after_setup_theme', 'letsgo_register_image_sizes' );
+

@@ -30,13 +30,11 @@ $theme_uri = get_template_directory_uri();
                     </small>
                 </div>
 
-                <?php
-                // Передаём параметры кнопки
+               <?php
                 $text  = 'Подробнее';
                 $url   = '#';
                 $class = 'about__button-primary';
 
-                // Подключаем компонент кнопки
                 include get_theme_file_path( 'template-parts/components/button-primary.php' );
                 ?>
 

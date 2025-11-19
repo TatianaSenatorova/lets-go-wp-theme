@@ -17,9 +17,9 @@ $theme_uri = get_template_directory_uri();
             </a>
 
             <ul class="footer__social social">
-                <li><a class="social__link social__link--badge" href="#" aria-label="Telegram><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#telegram"></use></svg></a></li>
-                <li><a class="social__link social__link--badge" href="#" aria-label="VK><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#vk"></use></svg></a></li>
-                <li><a class="social__link social__link--badge" href="#" aria-label="YouTube><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#youtube"></use></svg></a></li>
+                <li><a class="social__link social__link--badge" href="#" aria-label="Telegram"><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#telegram"></use></svg></a></li>
+                <li><a class="social__link social__link--badge" href="#" aria-label="VK"><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#vk"></use></svg></a></li>
+                <li><a class="social__link social__link--badge" href="#" aria-label="YouTube"><svg width="32"><use xlink:href="<?php echo $theme_uri; ?>/assets/img/sprite.svg#youtube"></use></svg></a></li>
             </ul>
 
         </div>
