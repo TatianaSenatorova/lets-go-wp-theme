@@ -34,7 +34,7 @@
 <?php
 if ( is_front_page() ) :
 ?>
-    <header class="header header--bottom-padding-sm" data-header data-scroll-lock-fill-gap">
+    <header class="header header--bottom-padding-sm" data-header data-scroll-lock-fill-gap>
         <!-- ТВОЙ ХЭДЕР ДЛЯ ГЛАВНОЙ (оставляю как есть) -->
         <div class="container">
             <div class="header__inner">

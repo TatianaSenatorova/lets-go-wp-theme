@@ -1,7 +1,7 @@
 <?php
 /**
- * Button Primary — версия без get_query_var()
- * Работает в WP 5.3.5 и ниже
+ * Button Primary — чистый компонент
+ * Работает в WP 5.3.5
  */
 
 $text  = isset($text) ? esc_html($text) : 'Подробнее';

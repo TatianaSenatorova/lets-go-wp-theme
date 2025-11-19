@@ -30,52 +30,41 @@ $theme_uri = get_template_directory_uri();
                     </small>
                 </div>
 
-            <?php
-$button_path = get_theme_file_path() . '/template-parts/components/button-primary.php';
+                <?php
+                // Передаём параметры кнопки
+                $text  = 'Подробнее';
+                $url   = '#';
+                $class = 'about__button-primary';
 
-echo '<div style="padding:10px;margin:10px 0;border:2px solid red">';
-echo 'Проверка пути: <br><b>' . $button_path . '</b><br>';
-
-if ( file_exists( $button_path ) ) {
-    echo '<span style="color:green">ФАЙЛ НАЙДЕН ✔</span>';
-    include $button_path;
-} else {
-    echo '<span style="color:red">ФАЙЛ НЕ НАЙДЕН ❌</span>';
-}
-
-echo '</div>';
-?>
+                // Подключаем компонент кнопки
+                include get_theme_file_path( 'template-parts/components/button-primary.php' );
+                ?>
 
             </div>
 
             <div class="about__image">
                 <div class="about__image-wrapper" data-anim="parallax" data-speed="0.25">
                     <picture>
-                        <!-- mobile webp -->
                         <source media="(max-width: 767px)" type="image/webp"
                             srcset="<?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-mobile.webp,
                                      <?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-mobile@2x.webp 2x"
                             width="292" height="353">
 
-                        <!-- mobile png -->
                         <source media="(max-width: 767px)" type="image/png"
                             srcset="<?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-mobile.png,
                                      <?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-mobile@2x.png 2x"
                             width="292" height="353">
 
-                        <!-- tablet webp -->
                         <source media="(max-width: 1023px)" type="image/webp"
                             srcset="<?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-tablet.webp,
                                      <?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-tablet@2x.webp 2x"
                             width="368" height="546">
 
-                        <!-- tablet png -->
                         <source media="(max-width: 1023px)" type="image/png"
                             srcset="<?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-tablet.png,
                                      <?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-tablet@2x.png 2x"
                             width="368" height="546">
 
-                        <!-- desktop -->
                         <source type="image/webp"
                             srcset="<?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-desktop.webp,
                                      <?php echo $theme_uri; ?>/assets/img/content/about/about-parallax-desktop@2x.webp 2x"
