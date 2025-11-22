@@ -1,85 +1,140 @@
 <?php
-
 /**
- * Подключение стилей и скриптов темы
+ * Функции темы LetsGo
  */
-function letsgo_theme_scripts() {
 
-    // Main CSS
+// =================== СТИЛИ И СКРИПТЫ =====================
+function letsgo_theme_scripts() {
     $style_path = get_template_directory() . '/assets/css/style.css';
-    if ( file_exists( $style_path ) ) {
+    if (file_exists($style_path)) {
         wp_enqueue_style(
             'letsgo-main-style',
             get_template_directory_uri() . '/assets/css/style.css',
             [],
-            filemtime( $style_path )
+            filemtime($style_path)
         );
     }
 
-    // Vendor JS
     $vendor_path = get_template_directory() . '/assets/js/vendor.js';
-    if ( file_exists( $vendor_path ) ) {
+    if (file_exists($vendor_path)) {
         wp_enqueue_script(
             'letsgo-vendor',
             get_template_directory_uri() . '/assets/js/vendor.js',
-            ['jquery'],
-            filemtime( $vendor_path ),
+            [],
+            filemtime($vendor_path),
             true
         );
     }
 
-    // Main JS
     $main_js_path = get_template_directory() . '/assets/js/main.js';
-    if ( file_exists( $main_js_path ) ) {
+    if (file_exists($main_js_path)) {
         wp_enqueue_script(
             'letsgo-main',
             get_template_directory_uri() . '/assets/js/main.js',
-            ['jquery', 'letsgo-vendor'],
-            filemtime( $main_js_path ),
+            ['letsgo-vendor'],
+            filemtime($main_js_path),
             true
         );
+
+        wp_localize_script('letsgo-main', 'wp_ajax_data', [
+            'url' => admin_url('admin-ajax.php'),
+        ]);
     }
 }
-add_action( 'wp_enqueue_scripts', 'letsgo_theme_scripts' );
+add_action('wp_enqueue_scripts', 'letsgo_theme_scripts');
 
 
-
-/**
- * Регистрация кастомного пост-типа «Направления»
- */
+// =================== ПОСТ ТИП =====================
 function register_directions_cpt() {
-
-    register_post_type( 'direction', [
+    register_post_type('direction', [
         'labels' => [
-            'name'          => 'Направления',
+            'name' => 'Направления',
             'singular_name' => 'Направление',
         ],
-        'public'                => true,
-        'publicly_queryable'    => true,
-        'has_archive'           => false,
-        'menu_icon'             => 'dashicons-location-alt',
-        'supports'              => [ 'title' ],
-        'rewrite'               => [ 'slug' => 'directions' ],
-        'show_in_rest'          => false, // нам REST не нужен
-    ] );
+        'public' => true,
+        'publicly_queryable' => false,
+        'has_archive' => false,
+        'menu_icon' => 'dashicons-location-alt',
+        'supports' => ['title'],
+        'rewrite' => false,
+        'show_in_rest' => false,
+    ]);
 }
-add_action( 'init', 'register_directions_cpt' );
+add_action('init', 'register_directions_cpt');
 
 
+// =================== AJAX MAILPOET =====================
 
-/**
- * Размеры изображений для секции Дирекшнс (для <picture>)
- */
-function letsgo_register_image_sizes() {
+add_action('wp_ajax_custom_subscribe', 'custom_subscribe_handler_ajax');
+add_action('wp_ajax_nopriv_custom_subscribe', 'custom_subscribe_handler_ajax');
 
-    // mobile — 270×111
-    add_image_size( 'dir_mobile', 270, 111, true );
+function custom_subscribe_handler_ajax() {
 
-    // tablet — 186×140
-    add_image_size( 'dir_tablet', 186, 140, true );
+    // Логирование
+    $log = function($msg) {
+        $file = __DIR__ . '/mailpoet_debug.log';
+        file_put_contents($file, date('H:i:s') . " — " . print_r($msg, true) . "\n", FILE_APPEND);
+    };
 
-    // desktop — 203×140
-    add_image_size( 'dir_desktop', 203, 140, true );
+    $log("=== AJAX STARTED ===");
+
+    // Проверяем MailPoet API
+    if (!class_exists('\MailPoet\API\API')) {
+        $log("MailPoet API not found");
+        wp_send_json_error(['status' => 'mailpoet_missing']);
+    }
+    $log("MailPoet API found");
+
+    // Email
+    $email = isset($_POST['reg_email']) ? sanitize_email($_POST['reg_email']) : '';
+    $log("Email: $email");
+
+    if (!is_email($email)) {
+        $log("Invalid email");
+        wp_send_json_error(['status' => 'invalid_email']);
+    }
+
+    $list_id = 4;
+    $log("List ID: $list_id");
+
+    try {
+        $api = \MailPoet\API\API::MP('v1');
+        $log("API Loaded");
+
+        try {
+            // Попробуем получить подписчика
+            $subscriber = $api->getSubscriber($email);
+            $log(['Found subscriber' => $subscriber]);
+
+            // Если найден — подписываем в список
+            $api->subscribeToLists($subscriber['id'], [$list_id]);
+            $log("Subscriber added to list");
+
+            wp_send_json_success(['status' => 'subscribed_existing']);
+        }
+        catch (\Exception $e) {
+
+            // Подписчика нет — создаём
+            if (strpos($e->getMessage(), 'не существует') !== false) {
+                $log("Subscriber does not exist — creating");
+
+                $subscriber = $api->addSubscriber([
+                    'email' => $email,
+                    'status' => 'subscribed'
+                ], [$list_id]);
+
+                $log(['Created subscriber' => $subscriber]);
+
+                wp_send_json_success(['status' => 'subscribed_new']);
+            }
+
+            // Любая другая ошибка
+            $log(['API error' => $e->getMessage()]);
+            wp_send_json_error(['status' => 'exception', 'message' => $e->getMessage()]);
+        }
+
+    } catch (\Exception $e) {
+        $log(['FATAL error' => $e->getMessage()]);
+        wp_send_json_error(['status' => 'exception', 'message' => $e->getMessage()]);
+    }
 }
-add_action( 'after_setup_theme', 'letsgo_register_image_sizes' );
-
